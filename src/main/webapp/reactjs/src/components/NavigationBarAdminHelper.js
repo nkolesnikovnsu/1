@@ -9,7 +9,6 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { logoutUser } from "../services/index";
-import userReducer from "../services/user/userReducer";
 
 const NavigationBarAdminHelper = () => {
   const auth = useSelector((state) => state.auth);

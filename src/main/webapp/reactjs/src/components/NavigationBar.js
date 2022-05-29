@@ -35,15 +35,6 @@ const NavigationBar = () => {
   const userLinks = (
     <>
       <Nav className="mr-auto">
-        <Link to={"add"} className="nav-link">
-          Add Sale
-        </Link>
-        <Link to={"list"} className="nav-link">
-          Sale List
-        </Link>
-        <Link to={"users"} className="nav-link">
-          User List
-        </Link>
         <Link to={"registerhelpers"} className="nav-link">
           Register Helpers
         </Link>

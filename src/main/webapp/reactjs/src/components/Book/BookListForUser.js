@@ -35,6 +35,9 @@ class BookList extends Component {
         this.state = {
             books: [],
             search: "",
+            search_magazine: "",
+            search_date_start: "",
+            search_date_end: "",
             currentPage: 1,
             booksPerPage: 5,
             sortDir: "asc",
@@ -135,6 +138,12 @@ class BookList extends Component {
         if (this.state.currentPage < condition) {
             if (this.state.search) {
                 this.searchData(condition);
+            } else if(this.state.search_magazine){
+                this.searchData(condition);
+            }else if(this.state.search_date_start){
+                this.searchData(condition);
+            }else if(this.state.search_date_end){
+                this.searchData(condition);
             } else {
                 this.findAllBooks(condition);
             }
@@ -147,6 +156,12 @@ class BookList extends Component {
             Math.ceil(this.state.totalElements / this.state.booksPerPage)
         ) {
             if (this.state.search) {
+                this.searchData(this.state.currentPage + 1);
+            } else if(this.state.search_magazine){
+                this.searchData(this.state.currentPage + 1);
+            }else if(this.state.search_date_start){
+                this.searchData(this.state.currentPage + 1);
+            }else if(this.state.search_date_end){
                 this.searchData(this.state.currentPage + 1);
             } else {
                 this.findAllBooks(this.state.currentPage + 1);
@@ -162,6 +177,18 @@ class BookList extends Component {
 
     cancelSearch = () => {
         this.setState({ search: "" });
+        this.findAllBooks(this.state.currentPage);
+    };
+    cancelSearchMagazine = () => {
+        this.setState({ search_magazine: "" });
+        this.findAllBooks(this.state.currentPage);
+    };
+    cancelSearchDateStart = () => {
+        this.setState({ search_date_start: "" });
+        this.findAllBooks(this.state.currentPage);
+    };
+    cancelSearchDateEnd = () => {
+        this.setState({ search_date_end: "" });
         this.findAllBooks(this.state.currentPage);
     };
 
@@ -187,8 +214,30 @@ class BookList extends Component {
             });
     };
 
+    searchDataMagazine = (currentPage) => {
+        currentPage -= 1;
+        axios
+            .get(
+                "http://localhost:8080/rest/books/search/" +
+                this.state.search_magazine +
+                "?page=" +
+                currentPage +
+                "&size=" +
+                this.state.booksPerPage
+            )
+            .then((response) => response.data)
+            .then((data) => {
+                this.setState({
+                    books: data.content,
+                    totalPages: data.totalPages,
+                    totalElements: data.totalElements,
+                    currentPage: data.number + 1,
+                });
+            });
+    };
+
     render() {
-        const { books, currentPage, totalPages, search } = this.state;
+        const { books, currentPage, totalPages, search, search_magazine, search_date_start, search_date_end } = this.state;
         return (
             <div>
                 <div style={{ display: this.state.show ? "block" : "none" }}>
@@ -206,7 +255,7 @@ class BookList extends Component {
                         <div style={{ float: "right" }}>
                             <InputGroup size="sm">
                                 <FormControl
-                                    placeholder="Search"
+                                    placeholder="Search name"
                                     name="search"
                                     value={search}
                                     className={"info-border bg-dark text-white"}
@@ -226,6 +275,87 @@ class BookList extends Component {
                                         variant="outline-danger"
                                         type="button"
                                         onClick={this.cancelSearch}
+                                    >
+                                        <FontAwesomeIcon icon={faTimes} />
+                                    </Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            <InputGroup size="sm">
+                                <FormControl
+                                    placeholder="Search magazine"
+                                    name="search_magazine"
+                                    value={search_magazine}
+                                    className={"info-border bg-dark text-white"}
+                                    onChange={this.searchChange}
+                                />
+                                <InputGroup.Append>
+                                    <Button
+                                        size="sm"
+                                        variant="outline-info"
+                                        type="button"
+                                        onClick={this.searchDataMagazine}
+                                    >
+                                        <FontAwesomeIcon icon={faSearch} />
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        variant="outline-danger"
+                                        type="button"
+                                        onClick={this.cancelSearchMagazine}
+                                    >
+                                        <FontAwesomeIcon icon={faTimes} />
+                                    </Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            <InputGroup size="sm">
+                                <FormControl
+                                    placeholder="Search date start"
+                                    name="search_date_start"
+                                    value={search_date_start}
+                                    className={"info-border bg-dark text-white"}
+                                    onChange={this.searchChange}
+                                />
+                                <InputGroup.Append>
+                                    <Button
+                                        size="sm"
+                                        variant="outline-info"
+                                        type="button"
+                                        onClick={this.searchData}
+                                    >
+                                        <FontAwesomeIcon icon={faSearch} />
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        variant="outline-danger"
+                                        type="button"
+                                        onClick={this.cancelSearchDateStart}
+                                    >
+                                        <FontAwesomeIcon icon={faTimes} />
+                                    </Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            <InputGroup size="sm">
+                                <FormControl
+                                    placeholder="Search date end"
+                                    name="search_date_end"
+                                    value={search_date_end}
+                                    className={"info-border bg-dark text-white"}
+                                    onChange={this.searchChange}
+                                />
+                                <InputGroup.Append>
+                                    <Button
+                                        size="sm"
+                                        variant="outline-info"
+                                        type="button"
+                                        onClick={this.searchData}
+                                    >
+                                        <FontAwesomeIcon icon={faSearch} />
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        variant="outline-danger"
+                                        type="button"
+                                        onClick={this.cancelSearchDateEnd}
                                     >
                                         <FontAwesomeIcon icon={faTimes} />
                                     </Button>

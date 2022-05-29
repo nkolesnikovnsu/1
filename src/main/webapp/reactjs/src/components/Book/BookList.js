@@ -231,6 +231,60 @@ class BookList extends Component {
                     </Button>
                   </InputGroup.Append>
                 </InputGroup>
+                <InputGroup size="sm">
+                  <FormControl
+                      placeholder="Search"
+                      name="search"
+                      value={search}
+                      className={"info-border bg-dark text-white"}
+                      onChange={this.searchChange}
+                  />
+                  <InputGroup.Append>
+                    <Button
+                        size="sm"
+                        variant="outline-info"
+                        type="button"
+                        onClick={this.searchData}
+                    >
+                      <FontAwesomeIcon icon={faSearch} />
+                    </Button>
+                    <Button
+                        size="sm"
+                        variant="outline-danger"
+                        type="button"
+                        onClick={this.cancelSearch}
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </Button>
+                  </InputGroup.Append>
+                </InputGroup>
+                <InputGroup size="sm">
+                  <FormControl
+                      placeholder="Search"
+                      name="search"
+                      value={search}
+                      className={"info-border bg-dark text-white"}
+                      onChange={this.searchChange}
+                  />
+                  <InputGroup.Append>
+                    <Button
+                        size="sm"
+                        variant="outline-info"
+                        type="button"
+                        onClick={this.searchData}
+                    >
+                      <FontAwesomeIcon icon={faSearch} />
+                    </Button>
+                    <Button
+                        size="sm"
+                        variant="outline-danger"
+                        type="button"
+                        onClick={this.cancelSearch}
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </Button>
+                  </InputGroup.Append>
+                </InputGroup>
               </div>
             </Card.Header>
             <Card.Body>

@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.mightyjava.domain.Book;
+import com.mightyjava.domain.Sale;
 import com.mightyjava.domain.Role;
 import com.mightyjava.domain.User;
 import com.mightyjava.service.IRoleService;
@@ -22,7 +22,7 @@ public class Application implements CommandLineRunner {
 	private IRoleService<Role> roleService;
 
 	@Autowired
-	private IService<Book> bookService;
+	private IService<Sale> bookService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -64,16 +64,16 @@ public class Application implements CommandLineRunner {
 
 		if (bookService.findAll().isEmpty()) {
 			for (int i = 1; i <= 1000; i++) {
-				Book book = new Book();
-				book.setTitle("Огурец зеленый" + i);
-				book.setAuthor("Magnit");
-				book.setCoverPhotoURL(
+				Sale sale = new Sale();
+				sale.setTitle("Огурец зеленый" + i);
+				sale.setAuthor("Magnit");
+				sale.setCoverPhotoURL(
 						"https://images-na.ssl-images-amazon.com/images/I/417zLTa1uqL._SX397_BO1,204,203,200_.jpg");
-				book.setIsbnNumber(2776.00);
-				book.setPrice(2776.00 + i);
-				book.setLanguage("06.05.2022");
-				book.setGenre("10.04.2023");
-				bookService.saveOrUpdate(book);
+				sale.setIsbnNumber(2776.00);
+				sale.setPrice(2776.00 + i);
+				sale.setLanguage("06.05.2022");
+				sale.setGenre("10.04.2023");
+				bookService.saveOrUpdate(sale);
 			}
 		}
 	}

@@ -31,7 +31,7 @@ const App = () => {
     return "";
   };
   const auth = useSelector((state) => state.auth);
-  if(auth.username==="test@admin.com"){
+  if(auth.username === "test@admin.com"){
     return (
         <Router>
           <NavigationBar />
@@ -64,7 +64,7 @@ const App = () => {
           <Footer />
         </Router>
     );
-  } else if(auth.username.indexOf("helper.com")!==-1){
+  } else if(auth.username.indexOf("helper.com") !== -1){
     return (
         <Router>
           <NavigationBarAdminHelper />

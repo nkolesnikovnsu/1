@@ -10,48 +10,48 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.mightyjava.domain.Book;
-import com.mightyjava.repository.BookRepository;
+import com.mightyjava.domain.Sale;
+import com.mightyjava.repository.SaleRepository;
 import com.mightyjava.service.IPageService;
 import com.mightyjava.service.IService;
 
 @Service
-public class BookServiceImpl implements IService<Book>, IPageService<Book> {
+public class SaleServiceImpl implements IService<Sale>, IPageService<Sale> {
 
 	@Autowired
-	private BookRepository bookRepository;
+	private SaleRepository saleRepository;
 	
 	@Override
-	public Collection<Book> findAll() {
-		return (Collection<Book>) bookRepository.findAll();
+	public Collection<Sale> findAll() {
+		return (Collection<Sale>) saleRepository.findAll();
 	}
 
 	@Override
-	public Page<Book> findAll(Pageable pageable, String searchText) {
-		return bookRepository.findAllBooks(pageable, searchText);
+	public Page<Sale> findAll(Pageable pageable, String searchText) {
+		return saleRepository.findAllBooks(pageable, searchText);
 	}
 
 	@Override
-	public Page<Book> findAll(Pageable pageable) {
-		return bookRepository.findAll(pageable);
+	public Page<Sale> findAll(Pageable pageable) {
+		return saleRepository.findAll(pageable);
 	}
 
 	@Override
-	public Optional<Book> findById(Long id) {
-		return bookRepository.findById(id);
+	public Optional<Sale> findById(Long id) {
+		return saleRepository.findById(id);
 	}
 
 	@Override
-	public Book saveOrUpdate(Book book) {
-		return bookRepository.save(book);
+	public Sale saveOrUpdate(Sale sale) {
+		return saleRepository.save(sale);
 	}
 
 	@Override
 	public String deleteById(Long id) {
 		JSONObject jsonObject = new JSONObject();
 		try {
-			bookRepository.deleteById(id);
-			jsonObject.put("message", "Book deleted successfully");
+			saleRepository.deleteById(id);
+			jsonObject.put("message", "Sale deleted successfully");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

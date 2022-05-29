@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_book")
-public class Book {
+public class Sale {
 
 	@Id
 	@GeneratedValue

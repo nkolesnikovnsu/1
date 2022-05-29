@@ -9,7 +9,6 @@ import com.mightyjava.domain.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-
 	@Query("FROM Role WHERE name=:name")
 	Role findByName(@Param("name") String name);
 }
