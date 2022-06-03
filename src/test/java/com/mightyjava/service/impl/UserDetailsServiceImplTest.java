@@ -30,25 +30,9 @@ class UserDetailsServiceImplTest {
     @MockBean
     private UserRepository userRepository;
 
-    /**
-     * Method under test: {@link UserDetailsServiceImpl#loadUserByUsername(String)}
-     */
     @Test
     @Disabled("TODO: Complete this test")
     void testLoadUserByUsername() throws UsernameNotFoundException {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "String.equalsIgnoreCase(String)" because the return value of "com.mightyjava.domain.Role.getName()" is null
-        //       at com.mightyjava.service.impl.UserDetailsServiceImpl.getGrantedAuthority(UserDetailsServiceImpl.java:35)
-        //       at com.mightyjava.service.impl.UserDetailsServiceImpl.loadUserByUsername(UserDetailsServiceImpl.java:30)
-        //   In order to prevent loadUserByUsername(String)
-        //   from throwing NullPointerException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   loadUserByUsername(String).
-        //   See https://diff.blue/R013 to resolve this issue.
-
         User user = new User();
         user.setEmail("jane.doe@example.org");
         user.setId(123L);
@@ -60,9 +44,6 @@ class UserDetailsServiceImplTest {
         this.userDetailsServiceImpl.loadUserByUsername("jane.doe@example.org");
     }
 
-    /**
-     * Method under test: {@link UserDetailsServiceImpl#loadUserByUsername(String)}
-     */
     @Test
     void testLoadUserByUsername2() throws UsernameNotFoundException {
         User user = mock(User.class);
@@ -102,25 +83,9 @@ class UserDetailsServiceImplTest {
         verify(user).setRole((Role) any());
     }
 
-    /**
-     * Method under test: {@link UserDetailsServiceImpl#loadUserByUsername(String)}
-     */
     @Test
     @Disabled("TODO: Complete this test")
     void testLoadUserByUsername3() throws UsernameNotFoundException {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "com.mightyjava.domain.Role.getName()" because the return value of "com.mightyjava.domain.User.getRole()" is null
-        //       at com.mightyjava.service.impl.UserDetailsServiceImpl.getGrantedAuthority(UserDetailsServiceImpl.java:35)
-        //       at com.mightyjava.service.impl.UserDetailsServiceImpl.loadUserByUsername(UserDetailsServiceImpl.java:30)
-        //   In order to prevent loadUserByUsername(String)
-        //   from throwing NullPointerException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   loadUserByUsername(String).
-        //   See https://diff.blue/R013 to resolve this issue.
-
         User user = mock(User.class);
         when(user.getRole()).thenReturn(null);
         when(user.getEmail()).thenReturn("jane.doe@example.org");
@@ -141,9 +106,6 @@ class UserDetailsServiceImplTest {
         this.userDetailsServiceImpl.loadUserByUsername("jane.doe@example.org");
     }
 
-    /**
-     * Method under test: {@link UserDetailsServiceImpl#loadUserByUsername(String)}
-     */
     @Test
     void testLoadUserByUsername4() throws UsernameNotFoundException {
         User user = mock(User.class);
@@ -183,27 +145,9 @@ class UserDetailsServiceImplTest {
         verify(user).setRole((Role) any());
     }
 
-    /**
-     * Method under test: {@link UserDetailsServiceImpl#loadUserByUsername(String)}
-     */
     @Test
     @Disabled("TODO: Complete this test")
     void testLoadUserByUsername5() throws UsernameNotFoundException {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.IllegalArgumentException: Cannot pass null or empty values to constructor
-        //       at org.springframework.util.Assert.isTrue(Assert.java:121)
-        //       at org.springframework.security.core.userdetails.User.<init>(User.java:110)
-        //       at org.springframework.security.core.userdetails.User.<init>(User.java:87)
-        //       at com.mightyjava.service.impl.UserDetailsServiceImpl.loadUserByUsername(UserDetailsServiceImpl.java:30)
-        //   In order to prevent loadUserByUsername(String)
-        //   from throwing IllegalArgumentException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   loadUserByUsername(String).
-        //   See https://diff.blue/R013 to resolve this issue.
-
         User user = mock(User.class);
         when(user.getRole()).thenReturn(new Role("Name"));
         when(user.getEmail()).thenReturn(null);

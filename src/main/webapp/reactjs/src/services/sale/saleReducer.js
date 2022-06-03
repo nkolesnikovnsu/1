@@ -1,29 +1,29 @@
-import * as BT from "./bookTypes";
+import * as BT from "./saleTypes";
 
 const initialState = {
-  book: "",
+  sale: "",
   error: "",
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case BT.SAVE_BOOK_REQUEST:
-    case BT.FETCH_BOOK_REQUEST:
-    case BT.UPDATE_BOOK_REQUEST:
-    case BT.DELETE_BOOK_REQUEST:
+    case BT.SAVE_SALE_REQUEST:
+    case BT.FETCH_SALE_REQUEST:
+    case BT.UPDATE_SALE_REQUEST:
+    case BT.DELETE_SALE_REQUEST:
     case BT.FETCH_LANGUAGES_REQUEST:
     case BT.FETCH_GENRES_REQUEST:
       return {
         ...state,
       };
-    case BT.BOOK_SUCCESS:
+    case BT.SALE_SUCCESS:
       return {
-        book: action.payload,
+        sale: action.payload,
         error: "",
       };
-    case BT.BOOK_FAILURE:
+    case BT.SALE_FAILURE:
       return {
-        book: "",
+        sale: "",
         error: action.payload,
       };
     case BT.LANGUAGES_SUCCESS:

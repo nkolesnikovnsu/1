@@ -48,14 +48,10 @@ class UserResourceImplTest {
     @Autowired
     private UserResourceImpl userResourceImpl;
 
-    /**
-     * Method under test: {@link UserResourceImpl#authenticate(User)}
-     */
     @Test
     void testAuthenticate() throws Exception {
         when(this.authenticationManager.authenticate((org.springframework.security.core.Authentication) any()))
                 .thenReturn(new TestingAuthenticationToken("Principal", "Credentials"));
-
         User user = new User();
         user.setEmail("jane.doe@example.org");
         user.setId(123L);
@@ -73,87 +69,8 @@ class UserResourceImplTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    /**
-     * Method under test: {@link UserResourceImpl#authenticate(User)}
-     */
     @Test
     void testAuthenticate2() throws Exception {
-        User user = new User();
-        user.setEmail("jane.doe@example.org");
-        user.setId(123L);
-        user.setMobile("Mobile");
-        user.setName("Name");
-        user.setPassword("iloveyou");
-        user.setRole(new Role());
-        when(this.userRepository.findByEmail((String) any())).thenReturn(user);
-        when(this.jwtTokenProvider.createToken((String) any(), (Role) any())).thenReturn("ABC123");
-        ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-        when(this.authenticationManager.authenticate((Authentication) any()))
-                .thenReturn(new RunAsUserToken("?", "Principal", "Credentials", authorities, Authentication.class));
-
-        User user1 = new User();
-        user1.setEmail("jane.doe@example.org");
-        user1.setId(123L);
-        user1.setMobile("Mobile");
-        user1.setName("Name");
-        user1.setPassword("iloveyou");
-        user1.setRole(new Role());
-        String content = (new ObjectMapper()).writeValueAsString(user1);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/user/authenticate")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(this.userResourceImpl)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(
-                        MockMvcResultMatchers.content().string("{\"name\":\"Principal\",\"authorities\":[],\"token\":\"ABC123\"}"));
-    }
-
-    /**
-     * Method under test: {@link UserResourceImpl#authenticate(User)}
-     */
-    @Test
-    void testAuthenticate3() throws Exception {
-        User user = new User();
-        user.setEmail("jane.doe@example.org");
-        user.setId(123L);
-        user.setMobile("Mobile");
-        user.setName("Name");
-        user.setPassword("iloveyou");
-        user.setRole(new Role());
-        when(this.userRepository.findByEmail((String) any())).thenReturn(user);
-        when(this.jwtTokenProvider.createToken((String) any(), (Role) any())).thenReturn("");
-        ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-        when(this.authenticationManager.authenticate((Authentication) any()))
-                .thenReturn(new RunAsUserToken("?", "Principal", "Credentials", authorities, Authentication.class));
-
-        User user1 = new User();
-        user1.setEmail("jane.doe@example.org");
-        user1.setId(123L);
-        user1.setMobile("Mobile");
-        user1.setName("Name");
-        user1.setPassword("iloveyou");
-        user1.setRole(new Role());
-        String content = (new ObjectMapper()).writeValueAsString(user1);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/user/authenticate")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(this.userResourceImpl)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(
-                        MockMvcResultMatchers.content().string("{\"name\":\"Principal\",\"authorities\":[],\"token\":\"\"}"));
-    }
-
-    /**
-     * Method under test: {@link UserResourceImpl#authenticate(User)}
-     */
-    @Test
-    void testAuthenticate4() throws Exception {
         User user = new User();
         user.setEmail("jane.doe@example.org");
         user.setId(123L);
@@ -168,9 +85,7 @@ class UserResourceImplTest {
         grantedAuthorityList.add(new SimpleGrantedAuthority("?"));
         RunAsUserToken runAsUserToken = new RunAsUserToken("?", "Principal", "Credentials", grantedAuthorityList,
                 Authentication.class);
-
         when(this.authenticationManager.authenticate((Authentication) any())).thenReturn(runAsUserToken);
-
         User user1 = new User();
         user1.setEmail("jane.doe@example.org");
         user1.setId(123L);
@@ -191,9 +106,6 @@ class UserResourceImplTest {
                         .string("{\"name\":\"Principal\",\"authorities\":[\"?\"],\"token\":\"ABC123\"}"));
     }
 
-    /**
-     * Method under test: {@link UserResourceImpl#register(User)}
-     */
     @Test
     void testRegister() throws Exception {
         User user = new User();
@@ -208,40 +120,6 @@ class UserResourceImplTest {
 
         User user1 = new User();
         user1.setEmail("jane.doe@example.org");
-        user1.setId(123L);
-        user1.setMobile("Mobile");
-        user1.setName("Name");
-        user1.setPassword("iloveyou");
-        user1.setRole(new Role());
-        String content = (new ObjectMapper()).writeValueAsString(user1);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/user/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(this.userResourceImpl)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("{\"message\":\"Name saved succesfully\"}"));
-    }
-
-    /**
-     * Method under test: {@link UserResourceImpl#register(User)}
-     */
-    @Test
-    void testRegister2() throws Exception {
-        User user = new User();
-        user.setEmail("jane.doe@example.org");
-        user.setId(123L);
-        user.setMobile("Mobile");
-        user.setName("Name");
-        user.setPassword("iloveyou");
-        user.setRole(new Role());
-        when(this.userRepository.saveAndFlush((User) any())).thenReturn(user);
-        when(this.roleRepository.findByName((String) any())).thenReturn(new Role());
-
-        User user1 = new User();
-        user1.setEmail("helper.com");
         user1.setId(123L);
         user1.setMobile("Mobile");
         user1.setName("Name");

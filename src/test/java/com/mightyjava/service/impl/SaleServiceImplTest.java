@@ -33,30 +33,12 @@ class SaleServiceImplTest {
     @Autowired
     private SaleServiceImpl saleServiceImpl;
 
-    /**
-     * Method under test: {@link SaleServiceImpl#findAll()}
-     */
     @Test
     @Disabled("TODO: Complete this test")
     void testFindAll() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "com.mightyjava.repository.SaleRepository.findAll()" because "this.saleRepository" is null
-        //       at com.mightyjava.service.impl.SaleServiceImpl.findAll(SaleServiceImpl.java:26)
-        //   In order to prevent findAll()
-        //   from throwing NullPointerException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   findAll().
-        //   See https://diff.blue/R013 to resolve this issue.
-
         (new SaleServiceImpl()).findAll();
     }
 
-    /**
-     * Method under test: {@link SaleServiceImpl#findAll(org.springframework.data.domain.Pageable)}
-     */
     @Test
     void testFindAll2() {
         PageImpl<Sale> pageImpl = new PageImpl<>(new ArrayList<>());
@@ -67,23 +49,17 @@ class SaleServiceImplTest {
         verify(this.saleRepository).findAll((org.springframework.data.domain.Pageable) any());
     }
 
-    /**
-     * Method under test: {@link SaleServiceImpl#findAll(org.springframework.data.domain.Pageable, String)}
-     */
     @Test
     void testFindAll3() {
         PageImpl<Sale> pageImpl = new PageImpl<>(new ArrayList<>());
-        when(this.saleRepository.findAllBooks((org.springframework.data.domain.Pageable) any(), (String) any()))
+        when(this.saleRepository.findAllSales((org.springframework.data.domain.Pageable) any(), (String) any()))
                 .thenReturn(pageImpl);
         Page<Sale> actualFindAllResult = this.saleServiceImpl.findAll(null, "Search Text");
         assertSame(pageImpl, actualFindAllResult);
         assertTrue(actualFindAllResult.toList().isEmpty());
-        verify(this.saleRepository).findAllBooks((org.springframework.data.domain.Pageable) any(), (String) any());
+        verify(this.saleRepository).findAllSales((org.springframework.data.domain.Pageable) any(), (String) any());
     }
 
-    /**
-     * Method under test: {@link SaleServiceImpl#findById(Long)}
-     */
     @Test
     void testFindById() {
         Sale sale = new Sale();
@@ -102,9 +78,6 @@ class SaleServiceImplTest {
         verify(this.saleRepository).findById((Long) any());
     }
 
-    /**
-     * Method under test: {@link SaleServiceImpl#saveOrUpdate(Sale)}
-     */
     @Test
     void testSaveOrUpdate() {
         Sale sale = new Sale();
@@ -129,9 +102,6 @@ class SaleServiceImplTest {
         verify(this.saleRepository).save((Sale) any());
     }
 
-    /**
-     * Method under test: {@link SaleServiceImpl#deleteById(Long)}
-     */
     @Test
     void testDeleteById() {
         doNothing().when(this.saleRepository).deleteById((Long) any());

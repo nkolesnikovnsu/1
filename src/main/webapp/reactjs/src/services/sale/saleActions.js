@@ -1,80 +1,80 @@
-import * as BT from "./bookTypes";
+import * as BT from "./saleTypes";
 import axios from "axios";
 
-export const saveBook = (book) => {
+export const saveSale = (sale) => {
   return (dispatch) => {
     dispatch({
-      type: BT.SAVE_BOOK_REQUEST,
+      type: BT.SAVE_SALE_REQUEST,
     });
     axios
-      .post("http://localhost:8080/rest/books", book)
+      .post("http://localhost:8080/rest/sales", sale)
       .then((response) => {
-        dispatch(bookSuccess(response.data));
+        dispatch(saleSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(bookFailure(error));
+        dispatch(saleFailure(error));
       });
   };
 };
 
-export const fetchBook = (bookId) => {
+export const fetchSale = (saleId) => {
   return (dispatch) => {
     dispatch({
-      type: BT.FETCH_BOOK_REQUEST,
+      type: BT.FETCH_SALE_REQUEST,
     });
     axios
-      .get("http://localhost:8080/rest/books/" + bookId)
+      .get("http://localhost:8080/rest/sales/" + saleId)
       .then((response) => {
-        dispatch(bookSuccess(response.data));
+        dispatch(saleSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(bookFailure(error));
+        dispatch(saleFailure(error));
       });
   };
 };
 
-export const updateBook = (book) => {
+export const updateSale = (sale) => {
   return (dispatch) => {
     dispatch({
-      type: BT.UPDATE_BOOK_REQUEST,
+      type: BT.UPDATE_SALE_REQUEST,
     });
     axios
-      .put("http://localhost:8080/rest/books", book)
+      .put("http://localhost:8080/rest/sales", sale)
       .then((response) => {
-        dispatch(bookSuccess(response.data));
+        dispatch(saleSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(bookFailure(error));
+        dispatch(saleFailure(error));
       });
   };
 };
 
-export const deleteBook = (bookId) => {
+export const deleteSale = (saleId) => {
   return (dispatch) => {
     dispatch({
-      type: BT.DELETE_BOOK_REQUEST,
+      type: BT.DELETE_SALE_REQUEST,
     });
     axios
-      .delete("http://localhost:8080/rest/books/" + bookId)
+      .delete("http://localhost:8080/rest/sales/" + saleId)
       .then((response) => {
-        dispatch(bookSuccess(response.data));
+        dispatch(saleSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(bookFailure(error));
+        dispatch(saleFailure(error));
       });
   };
 };
 
-const bookSuccess = (book) => {
+const saleSuccess = (sale) => {
   return {
-    type: BT.BOOK_SUCCESS,
-    payload: book,
+    type: BT.SALE_SUCCESS,
+    payload: sale,
   };
 };
 
-const bookFailure = (error) => {
+const saleFailure = (error) => {
   return {
-    type: BT.BOOK_FAILURE,
+    type: BT.SALE_FAILURE,
     payload: error,
   };
 };
@@ -85,7 +85,7 @@ export const fetchLanguages = () => {
       type: BT.FETCH_LANGUAGES_REQUEST,
     });
     axios
-      .get("http://localhost:8080/rest/books/languages")
+      .get("http://localhost:8080/rest/sales/languages")
       .then((response) => {
         dispatch({
           type: BT.LANGUAGES_SUCCESS,
@@ -107,7 +107,7 @@ export const fetchGenres = () => {
       type: BT.FETCH_GENRES_REQUEST,
     });
     axios
-      .get("http://localhost:8080/rest/books/genres")
+      .get("http://localhost:8080/rest/sales/genres")
       .then((response) => {
         dispatch({
           type: BT.GENRES_SUCCESS,

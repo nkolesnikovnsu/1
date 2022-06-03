@@ -6,9 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.Test;
 
 class RoleTest {
-    /**
-     * Method under test: {@link Role#Role()}
-     */
     @Test
     void testConstructor() {
         assertNull((new Role()).getName());

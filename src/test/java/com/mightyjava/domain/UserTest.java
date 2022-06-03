@@ -6,19 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import org.junit.jupiter.api.Test;
 
 class UserTest {
-    /**
-     * Methods under test:
-     *
-     * <ul>
-     *   <li>default or parameterless constructor of {@link User}
-     *   <li>{@link User#setEmail(String)}
-     *   <li>{@link User#setId(Long)}
-     *   <li>{@link User#setMobile(String)}
-     *   <li>{@link User#setName(String)}
-     *   <li>{@link User#setPassword(String)}
-     *   <li>{@link User#setRole(Role)}
-     * </ul>
-     */
     @Test
     void testConstructor() {
         User actualUser = new User();

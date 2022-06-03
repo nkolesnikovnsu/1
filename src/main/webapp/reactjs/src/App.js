@@ -7,8 +7,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar";
 import NavigationBarUser from "./components/NavigationBarUser";
 import Welcome from "./components/Welcome";
-import Book from "./components/Book/Book";
-import BookList from "./components/Book/BookList";
+import Sale from "./components/Sales/Sale";
+import SaleList from "./components/Sales/SaleList";
 import UserList from "./components/User/UserList";
 import Register from "./components/User/Register";
 import RegisterHelpers from "./components/User/RegisterHelpers";
@@ -19,7 +19,7 @@ import HomeAdminHelper from "./components/HomeAdminHelper";
 import HomeAdmin from "./components/HomeAdmin";
 import {useSelector} from "react-redux";
 import NavigationBarAdminHelper from "./components/NavigationBarAdminHelper";
-import BookListForUser from "./components/Book/BookListForUser";
+import SaleListForUser from "./components/Sales/SaleListForUser";
 
 const App = () => {
   window.onbeforeunload = (event) => {
@@ -30,7 +30,9 @@ const App = () => {
     }
     return "";
   };
+
   const auth = useSelector((state) => state.auth);
+
   if(auth.username === "test@admin.com"){
     return (
         <Router>
@@ -43,9 +45,9 @@ const App = () => {
                   <Route path="/homehelperadmin" exact component={HomeAdminHelper} />
                   <Route path="/" exact component={Welcome} />
                   <Route path="/home" exact component={Home} />
-                  <Route path="/add" exact component={Book} />
-                  <Route path="/edit/:id" exact component={Book} />
-                  <Route path="/list" exact component={BookList} />
+                  <Route path="/add" exact component={Sale} />
+                  <Route path="/edit/:id" exact component={Sale} />
+                  <Route path="/list" exact component={SaleList} />
                   <Route path="/users" exact component={UserList} />
                   <Route path="/register" exact component={Register} />
                   <Route path="/login" exact component={Login} />
@@ -76,9 +78,9 @@ const App = () => {
                   <Route path="/homehelperadmin" exact component={HomeAdminHelper} />
                   <Route path="/" exact component={Welcome} />
                   <Route path="/home" exact component={Home} />
-                  <Route path="/add" exact component={Book} />
-                  <Route path="/edit/:id" exact component={Book} />
-                  <Route path="/list" exact component={BookList} />
+                  <Route path="/add" exact component={Sale} />
+                  <Route path="/edit/:id" exact component={Sale} />
+                  <Route path="/list" exact component={SaleList} />
                   <Route path="/users" exact component={UserList} />
                   <Route path="/register" exact component={Register} />
                   <Route path="/login" exact component={Login} />
@@ -106,7 +108,7 @@ const App = () => {
                 <Switch>
                   <Route path="/" exact component={Welcome} />
                   <Route path="/home" exact component={Home} />
-                  <Route path="/list" exact component={BookListForUser} />
+                  <Route path="/list" exact component={SaleListForUser} />
                   <Route path="/register" exact component={Register} />
                   <Route path="/login" exact component={Login} />
                   <Route

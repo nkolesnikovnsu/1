@@ -28,7 +28,7 @@ public class SaleServiceImpl implements IService<Sale>, IPageService<Sale> {
 
 	@Override
 	public Page<Sale> findAll(Pageable pageable, String searchText) {
-		return saleRepository.findAllBooks(pageable, searchText);
+		return saleRepository.findAllSales(pageable, searchText);
 	}
 
 	@Override

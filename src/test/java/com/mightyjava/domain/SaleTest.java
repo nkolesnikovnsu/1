@@ -6,20 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.Test;
 
 class SaleTest {
-    /**
-     * Methods under test:
-     *
-     * <ul>
-     *   <li>default or parameterless constructor of {@link Sale}
-     *   <li>{@link Sale#setAuthor(String)}
-     *   <li>{@link Sale#setGenre(String)}
-     *   <li>{@link Sale#setId(Long)}
-     *   <li>{@link Sale#setIsbnNumber(Double)}
-     *   <li>{@link Sale#setLanguage(String)}
-     *   <li>{@link Sale#setPrice(Double)}
-     *   <li>{@link Sale#setTitle(String)}
-     * </ul>
-     */
     @Test
     void testConstructor() {
         Sale actualSale = new Sale();

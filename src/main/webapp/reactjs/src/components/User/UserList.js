@@ -214,7 +214,7 @@ class UserList extends Component {
         .then((response) => response.data)
         .then((data) => {
           this.setState({
-            books: data.content,
+            sales: data.content,
             totalPages: data.totalPages,
             totalElements: data.totalElements,
             currentPage: data.number + 1,
@@ -228,12 +228,12 @@ class UserList extends Component {
   }
 
   deleteUser = (userId) => {
-    this.props.deleteBook(userId);
+    this.props.deleteSale(userId);
     setTimeout(() => {
       if (this.props.userObject != null) {
         this.setState({ show: true });
         setTimeout(() => this.setState({ show: false }), 3000);
-        this.findAllBooks(this.state.currentPage);
+        this.findAllSales(this.state.currentPage);
       } else {
         this.setState({ show: false });
       }

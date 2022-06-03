@@ -32,9 +32,6 @@ class UserServiceImplTest {
     @Autowired
     private UserServiceImpl userServiceImpl;
 
-    /**
-     * Method under test: {@link UserServiceImpl#findAll()}
-     */
     @Test
     void testFindAll() {
         ArrayList<User> userList = new ArrayList<>();
@@ -45,9 +42,6 @@ class UserServiceImplTest {
         verify(this.userRepository).findAll();
     }
 
-    /**
-     * Method under test: {@link UserServiceImpl#findById(Long)}
-     */
     @Test
     void testFindById() {
         User user = new User();
@@ -65,9 +59,6 @@ class UserServiceImplTest {
         verify(this.userRepository).findById((Long) any());
     }
 
-    /**
-     * Method under test: {@link UserServiceImpl#saveOrUpdate(User)}
-     */
     @Test
     void testSaveOrUpdate() {
         User user = new User();
@@ -90,9 +81,6 @@ class UserServiceImplTest {
         verify(this.userRepository).saveAndFlush((User) any());
     }
 
-    /**
-     * Method under test: {@link UserServiceImpl#deleteById(Long)}
-     */
     @Test
     void testDeleteById() {
         doNothing().when(this.userRepository).deleteById((Long) any());

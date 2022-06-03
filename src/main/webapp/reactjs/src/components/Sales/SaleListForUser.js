@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import {connect, useSelector} from "react-redux";
-import { deleteBook } from "../../services/index";
+import { deleteSale } from "../../services/index";
 
 import "./../../assets/css/Style.css";
 import {
@@ -29,17 +29,17 @@ import { Link } from "react-router-dom";
 import MyToast from "../MyToast";
 import axios from "axios";
 
-class BookList extends Component {
+class SaleList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            books: [],
+            sales: [],
             search: "",
             search_magazine: "",
             search_date_start: "",
             search_date_end: "",
             currentPage: 1,
-            booksPerPage: 5,
+            salesPerPage: 5,
             sortDir: "asc",
         };
     }
@@ -49,29 +49,29 @@ class BookList extends Component {
             this.state.sortDir === "asc"
                 ? this.setState({ sortDir: "desc" })
                 : this.setState({ sortDir: "asc" });
-            this.findAllBooks(this.state.currentPage);
+            this.findAllSales(this.state.currentPage);
         }, 500);
     };
 
     componentDidMount() {
-        this.findAllBooks(this.state.currentPage);
+        this.findAllSales(this.state.currentPage);
     }
 
-    findAllBooks(currentPage) {
+    findAllSales(currentPage) {
         currentPage -= 1;
         axios
             .get(
-                "http://localhost:8080/rest/books?pageNumber=" +
+                "http://localhost:8080/rest/sales?pageNumber=" +
                 currentPage +
                 "&pageSize=" +
-                this.state.booksPerPage +
+                this.state.salesPerPage +
                 "&sortBy=price&sortDir=" +
                 this.state.sortDir
             )
             .then((response) => response.data)
             .then((data) => {
                 this.setState({
-                    books: data.content,
+                    sales: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1,
@@ -84,13 +84,13 @@ class BookList extends Component {
             });
     }
 
-    deleteBook = (bookId) => {
-        this.props.deleteBook(bookId);
+    deleteSale = (saleId) => {
+        this.props.deleteSale(saleId);
         setTimeout(() => {
-            if (this.props.bookObject != null) {
+            if (this.props.saleObject != null) {
                 this.setState({ show: true });
                 setTimeout(() => this.setState({ show: false }), 3000);
-                this.findAllBooks(this.state.currentPage);
+                this.findAllSales(this.state.currentPage);
             } else {
                 this.setState({ show: false });
             }
@@ -102,7 +102,7 @@ class BookList extends Component {
         if (this.state.search) {
             this.searchData(targetPage);
         } else {
-            this.findAllBooks(targetPage);
+            this.findAllSales(targetPage);
         }
         this.setState({
             [event.target.name]: targetPage,
@@ -115,7 +115,7 @@ class BookList extends Component {
             if (this.state.search) {
                 this.searchData(firstPage);
             } else {
-                this.findAllBooks(firstPage);
+                this.findAllSales(firstPage);
             }
         }
     };
@@ -126,14 +126,14 @@ class BookList extends Component {
             if (this.state.search) {
                 this.searchData(this.state.currentPage - prevPage);
             } else {
-                this.findAllBooks(this.state.currentPage - prevPage);
+                this.findAllSales(this.state.currentPage - prevPage);
             }
         }
     };
 
     lastPage = () => {
         let condition = Math.ceil(
-            this.state.totalElements / this.state.booksPerPage
+            this.state.totalElements / this.state.salesPerPage
         );
         if (this.state.currentPage < condition) {
             if (this.state.search) {
@@ -145,7 +145,7 @@ class BookList extends Component {
             }else if(this.state.search_date_end){
                 this.searchData(condition);
             } else {
-                this.findAllBooks(condition);
+                this.findAllSales(condition);
             }
         }
     };
@@ -153,7 +153,7 @@ class BookList extends Component {
     nextPage = () => {
         if (
             this.state.currentPage <
-            Math.ceil(this.state.totalElements / this.state.booksPerPage)
+            Math.ceil(this.state.totalElements / this.state.salesPerPage)
         ) {
             if (this.state.search) {
                 this.searchData(this.state.currentPage + 1);
@@ -164,7 +164,7 @@ class BookList extends Component {
             }else if(this.state.search_date_end){
                 this.searchData(this.state.currentPage + 1);
             } else {
-                this.findAllBooks(this.state.currentPage + 1);
+                this.findAllSales(this.state.currentPage + 1);
             }
         }
     };
@@ -177,36 +177,36 @@ class BookList extends Component {
 
     cancelSearch = () => {
         this.setState({ search: "" });
-        this.findAllBooks(this.state.currentPage);
+        this.findAllSales(this.state.currentPage);
     };
     cancelSearchMagazine = () => {
         this.setState({ search_magazine: "" });
-        this.findAllBooks(this.state.currentPage);
+        this.findAllSales(this.state.currentPage);
     };
     cancelSearchDateStart = () => {
         this.setState({ search_date_start: "" });
-        this.findAllBooks(this.state.currentPage);
+        this.findAllSales(this.state.currentPage);
     };
     cancelSearchDateEnd = () => {
         this.setState({ search_date_end: "" });
-        this.findAllBooks(this.state.currentPage);
+        this.findAllSales(this.state.currentPage);
     };
 
     searchData = (currentPage) => {
         currentPage -= 1;
         axios
             .get(
-                "http://localhost:8080/rest/books/search/" +
+                "http://localhost:8080/rest/sales/search/" +
                 this.state.search +
                 "?page=" +
                 currentPage +
                 "&size=" +
-                this.state.booksPerPage
+                this.state.salesPerPage
             )
             .then((response) => response.data)
             .then((data) => {
                 this.setState({
-                    books: data.content,
+                    sales: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1,
@@ -218,17 +218,61 @@ class BookList extends Component {
         currentPage -= 1;
         axios
             .get(
-                "http://localhost:8080/rest/books/search/" +
+                "http://localhost:8080/rest/sales/search/" +
                 this.state.search_magazine +
                 "?page=" +
                 currentPage +
                 "&size=" +
-                this.state.booksPerPage
+                this.state.salesPerPage
             )
             .then((response) => response.data)
             .then((data) => {
                 this.setState({
-                    books: data.content,
+                    sales: data.content,
+                    totalPages: data.totalPages,
+                    totalElements: data.totalElements,
+                    currentPage: data.number + 1,
+                });
+            });
+    };
+
+    searchDataDateStart = (currentPage) => {
+        currentPage -= 1;
+        axios
+            .get(
+                "http://localhost:8080/rest/sales/search/" +
+                this.state.search_date_start +
+                "?page=" +
+                currentPage +
+                "&size=" +
+                this.state.salesPerPage
+            )
+            .then((response) => response.data)
+            .then((data) => {
+                this.setState({
+                    sales: data.content,
+                    totalPages: data.totalPages,
+                    totalElements: data.totalElements,
+                    currentPage: data.number + 1,
+                });
+            });
+    };
+
+    searchDataDateEnd = (currentPage) => {
+        currentPage -= 1;
+        axios
+            .get(
+                "http://localhost:8080/rest/sales/search/" +
+                this.state.search_date_end +
+                "?page=" +
+                currentPage +
+                "&size=" +
+                this.state.salesPerPage
+            )
+            .then((response) => response.data)
+            .then((data) => {
+                this.setState({
+                    sales: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1,
@@ -237,7 +281,7 @@ class BookList extends Component {
     };
 
     render() {
-        const { books, currentPage, totalPages, search, search_magazine, search_date_start, search_date_end } = this.state;
+        const { sales, currentPage, totalPages, search, search_magazine, search_date_start, search_date_end } = this.state;
         return (
             <div>
                 <div style={{ display: this.state.show ? "block" : "none" }}>
@@ -320,7 +364,7 @@ class BookList extends Component {
                                         size="sm"
                                         variant="outline-info"
                                         type="button"
-                                        onClick={this.searchData}
+                                        onClick={this.searchDataDateStart}
                                     >
                                         <FontAwesomeIcon icon={faSearch} />
                                     </Button>
@@ -347,7 +391,7 @@ class BookList extends Component {
                                         size="sm"
                                         variant="outline-info"
                                         type="button"
-                                        onClick={this.searchData}
+                                        onClick={this.searchDataDateEnd}
                                     >
                                         <FontAwesomeIcon icon={faSearch} />
                                     </Button>
@@ -387,34 +431,34 @@ class BookList extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {books.length === 0 ? (
+                            {sales.length === 0 ? (
                                 <tr align="center">
                                     <td colSpan="7">No Sales Available.</td>
                                 </tr>
                             ) : (
-                                books.map((book) => (
-                                    <tr key={book.id}>
+                                sales.map((sale) => (
+                                    <tr key={sale.id}>
                                         <td>
                                             <Image
-                                                src={book.coverPhotoURL}
+                                                src={sale.coverPhotoURL}
                                                 roundedCircle
                                                 width="25"
                                                 height="25"
                                             />{" "}
-                                            {book.title}
+                                            {sale.title}
                                         </td>
-                                        <td>{book.author}</td>
-                                        <td>{book.isbnNumber}</td>
-                                        <td>{book.price}</td>
-                                        <td>{book.language}</td>
-                                        <td>{book.genre}</td>
+                                        <td>{sale.author}</td>
+                                        <td>{sale.isbnNumber}</td>
+                                        <td>{sale.price}</td>
+                                        <td>{sale.language}</td>
+                                        <td>{sale.genre}</td>
                                     </tr>
                                 ))
                             )}
                             </tbody>
                         </Table>
                     </Card.Body>
-                    {books.length > 0 ? (
+                    {sales.length > 0 ? (
                         <Card.Footer>
                             <div style={{ float: "left" }}>
                                 Showing Page {currentPage} of {totalPages}
@@ -475,14 +519,14 @@ class BookList extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        bookObject: state.book,
+        saleObject: state.sale,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteBook: (bookId) => dispatch(deleteBook(bookId)),
+        deleteSale: (saleId) => dispatch(deleteSale(saleId)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookList);
+export default connect(mapStateToProps, mapDispatchToProps)(SaleList);

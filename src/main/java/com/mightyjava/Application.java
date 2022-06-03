@@ -22,7 +22,7 @@ public class Application implements CommandLineRunner {
 	private IRoleService<Role> roleService;
 
 	@Autowired
-	private IService<Sale> bookService;
+	private IService<Sale> saleIService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -62,7 +62,7 @@ public class Application implements CommandLineRunner {
 			userService.saveOrUpdate(user3);
 		}
 
-		if (bookService.findAll().isEmpty()) {
+		if (saleIService.findAll().isEmpty()) {
 			for (int i = 1; i <= 1000; i++) {
 				Sale sale = new Sale();
 				sale.setTitle("Огурец зеленый" + i);
@@ -73,7 +73,7 @@ public class Application implements CommandLineRunner {
 				sale.setPrice(2776.00 + i);
 				sale.setLanguage("06.05.2022");
 				sale.setGenre("10.04.2023");
-				bookService.saveOrUpdate(sale);
+				saleIService.saveOrUpdate(sale);
 			}
 		}
 	}

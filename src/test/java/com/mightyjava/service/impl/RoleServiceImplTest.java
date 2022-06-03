@@ -31,9 +31,6 @@ class RoleServiceImplTest {
     @Autowired
     private RoleServiceImpl roleServiceImpl;
 
-    /**
-     * Method under test: {@link RoleServiceImpl#findAll()}
-     */
     @Test
     void testFindAll() {
         ArrayList<Role> roleList = new ArrayList<>();
@@ -44,9 +41,6 @@ class RoleServiceImplTest {
         verify(this.roleRepository).findAll();
     }
 
-    /**
-     * Method under test: {@link RoleServiceImpl#findById(Long)}
-     */
     @Test
     void testFindById() {
         Optional<Role> ofResult = Optional.of(new Role());
@@ -57,9 +51,6 @@ class RoleServiceImplTest {
         verify(this.roleRepository).findById((Long) any());
     }
 
-    /**
-     * Method under test: {@link RoleServiceImpl#findByName(String)}
-     */
     @Test
     void testFindByName() {
         Role role = new Role();
@@ -68,9 +59,6 @@ class RoleServiceImplTest {
         verify(this.roleRepository).findByName((String) any());
     }
 
-    /**
-     * Method under test: {@link RoleServiceImpl#saveOrUpdate(Role)}
-     */
     @Test
     void testSaveOrUpdate() {
         Role role = new Role();
@@ -79,9 +67,6 @@ class RoleServiceImplTest {
         verify(this.roleRepository).saveAndFlush((Role) any());
     }
 
-    /**
-     * Method under test: {@link RoleServiceImpl#deleteById(Long)}
-     */
     @Test
     void testDeleteById() {
         doNothing().when(this.roleRepository).deleteById((Long) any());

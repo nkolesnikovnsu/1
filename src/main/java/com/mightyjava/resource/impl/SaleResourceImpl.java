@@ -17,24 +17,24 @@ import com.mightyjava.service.IPageService;
 import com.mightyjava.service.IService;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/sales")
 @CrossOrigin(origins="http://localhost:3000")
 public class SaleResourceImpl implements Resource<Sale> {
 	
 	@Autowired
-	private IService<Sale> bookService;
+	private IService<Sale> saleIService;
 	
 	@Autowired
-	private IPageService<Sale> bookPageService;
+	private IPageService<Sale> saleIPageService;
 
 	@Override
 	public ResponseEntity<Page<Sale>> findAll(Pageable pageable, String searchText) {
-		return new ResponseEntity<>(bookPageService.findAll(pageable, searchText), HttpStatus.OK);
+		return new ResponseEntity<>(saleIPageService.findAll(pageable, searchText), HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<Page<Sale>> findAll(int pageNumber, int pageSize, String sortBy, String sortDir) {
-		return new ResponseEntity<>(bookPageService.findAll(
+		return new ResponseEntity<>(saleIPageService.findAll(
 				PageRequest.of(
 						pageNumber, pageSize,
 						sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending()
@@ -44,21 +44,21 @@ public class SaleResourceImpl implements Resource<Sale> {
 
 	@Override
 	public ResponseEntity<Sale> findById(Long id) {
-		return new ResponseEntity<>(bookService.findById(id).get(), HttpStatus.OK);
+		return new ResponseEntity<>(saleIService.findById(id).get(), HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<Sale> save(Sale sale) {
-		return new ResponseEntity<>(bookService.saveOrUpdate(sale), HttpStatus.CREATED);
+		return new ResponseEntity<>(saleIService.saveOrUpdate(sale), HttpStatus.CREATED);
 	}
 
 	@Override
 	public ResponseEntity<Sale> update(Sale sale) {
-		return new ResponseEntity<>(bookService.saveOrUpdate(sale), HttpStatus.OK);
+		return new ResponseEntity<>(saleIService.saveOrUpdate(sale), HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<String> deleteById(Long id) {
-		return new ResponseEntity<>(bookService.deleteById(id), HttpStatus.OK);
+		return new ResponseEntity<>(saleIService.deleteById(id), HttpStatus.OK);
 	}
 }

@@ -2,9 +2,9 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import {
-  saveBook,
-  fetchBook,
-  updateBook,
+  saveSale,
+  fetchSale,
+  updateSale,
   fetchLanguages,
   fetchGenres,
 } from "../../services/index";
@@ -20,7 +20,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import MyToast from "../MyToast";
 
-class Book extends Component {
+class Sale extends Component {
   constructor(props) {
     super(props);
     this.state = this.initialState;
@@ -43,9 +43,9 @@ class Book extends Component {
   };
 
   componentDidMount() {
-    const bookId = +this.props.match.params.id;
-    if (bookId) {
-      this.findBookById(bookId);
+    const saleId = +this.props.match.params.id;
+    if (saleId) {
+      this.findSaleById(saleId);
     }
     //this.findAllLanguages();
   }
@@ -70,11 +70,11 @@ class Book extends Component {
   findAllGenres = () => {
     this.props.fetchGenres();
     setTimeout(() => {
-      let bookGenres = this.props.bookObject.genres;
-      if (bookGenres) {
+      let saleGenres = this.props.saleObject.genres;
+      if (saleGenres) {
         this.setState({
           genres: [{ value: "", display: "Select date_end" }].concat(
-              bookGenres.map((genre) => {
+              saleGenres.map((genre) => {
                 return { value: genre, display: genre };
               })
           ),
@@ -83,33 +83,33 @@ class Book extends Component {
     }, 100);
   };
 
-  findBookById = (bookId) => {
-    this.props.fetchBook(bookId);
+  findSaleById = (saleId) => {
+    this.props.fetchSale(saleId);
     setTimeout(() => {
-      let book = this.props.bookObject.book;
-      if (book != null) {
+      let sale = this.props.saleObject.sale;
+      if (sale != null) {
         this.setState({
-          id: book.id,
-          title: book.title,
-          author: book.author,
-          coverPhotoURL: book.coverPhotoURL,
-          isbnNumber: book.isbnNumber,
-          price: book.price,
-          language: book.language,
-          genre: book.genre,
+          id: sale.id,
+          title: sale.title,
+          author: sale.author,
+          coverPhotoURL: sale.coverPhotoURL,
+          isbnNumber: sale.isbnNumber,
+          price: sale.price,
+          language: sale.language,
+          genre: sale.genre,
         });
       }
     }, 1000);
   };
 
-  resetBook = () => {
+  resetSale = () => {
     this.setState(() => this.initialState);
   };
 
-  submitBook = (event) => {
+  submitSale = (event) => {
     event.preventDefault();
 
-    const book = {
+    const sale = {
       title: this.state.title,
       author: this.state.author,
       coverPhotoURL: this.state.coverPhotoURL,
@@ -119,9 +119,9 @@ class Book extends Component {
       genre: this.state.genre,
     };
 
-    this.props.saveBook(book);
+    this.props.saveSale(sale);
     setTimeout(() => {
-      if (this.props.bookObject.book != null) {
+      if (this.props.saleObject.sale != null) {
         this.setState({ show: true, method: "post" });
         setTimeout(() => this.setState({ show: false }), 3000);
       } else {
@@ -131,10 +131,10 @@ class Book extends Component {
     this.setState(this.initialState);
   };
 
-  updateBook = (event) => {
+  updateSale = (event) => {
     event.preventDefault();
 
-    const book = {
+    const sale = {
       id: this.state.id,
       title: this.state.title,
       author: this.state.author,
@@ -144,9 +144,9 @@ class Book extends Component {
       language: this.state.language,
       genre: this.state.genre,
     };
-    this.props.updateBook(book);
+    this.props.updateSale(sale);
     setTimeout(() => {
-      if (this.props.bookObject.book != null) {
+      if (this.props.saleObject.sale != null) {
         this.setState({ show: true, method: "put" });
         setTimeout(() => this.setState({ show: false }), 3000);
       } else {
@@ -156,13 +156,13 @@ class Book extends Component {
     this.setState(this.initialState);
   };
 
-  bookChange = (event) => {
+  saleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  bookList = () => {
+  saleList = () => {
     return this.props.history.push("/list");
   };
 
@@ -189,9 +189,9 @@ class Book extends Component {
               {this.state.id ? "Update Sale" : "Add New Sale"}
             </Card.Header>
             <Form
-                onReset={this.resetBook}
-                onSubmit={this.state.id ? this.updateBook : this.submitBook}
-                id="bookFormId"
+                onReset={this.resetSale}
+                onSubmit={this.state.id ? this.updateSale : this.submitSale}
+                id="saleFormId"
             >
               <Card.Body>
                 <Form.Row>
@@ -203,7 +203,7 @@ class Book extends Component {
                         type="test"
                         name="title"
                         value={title}
-                        onChange={this.bookChange}
+                        onChange={this.saleChange}
                         className={"bg-dark text-white"}
                         placeholder="Enter Sale Title"
                     />
@@ -216,7 +216,7 @@ class Book extends Component {
                         type="test"
                         name="author"
                         value={author}
-                        onChange={this.bookChange}
+                        onChange={this.saleChange}
                         className={"bg-dark text-white"}
                         placeholder="Enter Magazine"
                     />
@@ -232,7 +232,7 @@ class Book extends Component {
                           type="test"
                           name="coverPhotoURL"
                           value={coverPhotoURL}
-                          onChange={this.bookChange}
+                          onChange={this.saleChange}
                           className={"bg-dark text-white"}
                           placeholder="Enter Sale Cover Photo URL"
                       />
@@ -256,7 +256,7 @@ class Book extends Component {
                         type="test"
                         name="isbnNumber"
                         value={isbnNumber}
-                        onChange={this.bookChange}
+                        onChange={this.saleChange}
                         className={"bg-dark text-white"}
                         placeholder="Enter Sale OLD_PRICE"
                     />
@@ -271,7 +271,7 @@ class Book extends Component {
                         type="test"
                         name="price"
                         value={price}
-                        onChange={this.bookChange}
+                        onChange={this.saleChange}
                         className={"bg-dark text-white"}
                         placeholder="Enter Sale NEW_PRICE"
                     />
@@ -282,7 +282,7 @@ class Book extends Component {
                         required
                         autoComplete="off"
                         type="test"
-                        onChange={this.bookChange}
+                        onChange={this.saleChange}
                         name="language"
                         value={language}
                         className={"bg-dark text-white"}
@@ -295,7 +295,7 @@ class Book extends Component {
                         required
                         autoComplete="off"
                         type="test"
-                        onChange={this.bookChange}
+                        onChange={this.saleChange}
                         name="genre"
                         value={genre}
                         className={"bg-dark text-white"}
@@ -316,7 +316,7 @@ class Book extends Component {
                     size="sm"
                     variant="info"
                     type="button"
-                    onClick={() => this.bookList()}
+                    onClick={() => this.saleList()}
                 >
                   <FontAwesomeIcon icon={faList} /> Sale List
                 </Button>
@@ -330,18 +330,18 @@ class Book extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    bookObject: state.book,
+    saleObject: state.sale,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    saveBook: (book) => dispatch(saveBook(book)),
-    fetchBook: (bookId) => dispatch(fetchBook(bookId)),
-    updateBook: (book) => dispatch(updateBook(book)),
+    saveSale: (sale) => dispatch(saveSale(sale)),
+    fetchSale: (saleId) => dispatch(fetchSale(saleId)),
+    updateSale: (sale) => dispatch(updateSale(sale)),
     fetchLanguages: () => dispatch(fetchLanguages()),
     fetchGenres: () => dispatch(fetchGenres()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Book);
+export default connect(mapStateToProps, mapDispatchToProps)(Sale);
